@@ -20,15 +20,14 @@ body {
 
 
 .topContainer {
-    flex: 0 0 64px;
+    flex: 0 0 10vh;
     border: 1px solid red ;
 }
 .bottomContainer {
-    flex-grow: 1;
-    max-height: 300px;
     border: 1px solid aqua;
+    /* flex: 1; */
     display: flex;
-    flex-wrap: nowrap;
+    max-height: 100%;
 }
 
 .leftContainer {
@@ -49,12 +48,13 @@ body {
 }
 
 .midTopContainer {
-    flex: 0 0 50px;
+    flex: 0 0 6vh;
     border: 1px solid sandybrown;
 }
 
 .midBottomContainer {
     border: 1px solid pink;
-    flex: 1;
-    overflow: auto;
+    /* flex: 1; */
+    overflow-y: scroll;
+    height: 83vh;
 }
