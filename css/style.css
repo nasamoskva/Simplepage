@@ -73,7 +73,7 @@ body {
 }
 
 .leftContainer {
-  border: 1px solid salmon;
+  /* border: 1px solid salmn;  */
   flex: 0 0 250px;
 }
 
@@ -200,4 +200,127 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+.aic {
+  width: 256px;
+  height: 100px;
+}
+
+.z0{
+  user-select: none;
+  height: 56px;
+  border: 1px solid;
+  border-radius: 16px;
+  margin-top: 8%;
+  margin-bottom: 9px;
+  margin-right: 100px;
+  margin-left: 10px;
+  color:#5f6368;
+  background-color: #fff;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.z0 #compose-svg {
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+.z0 div {
+  -webkit-font-smoothing: antialiased;
+  font-family: "Google Sans";
+  font-size: .875rem;
+  letter-spacing: normal;
+}
+
+.emailOptions{
+  overflow: visible;
+  white-space: nowrap;
+  width: 100%;
+}
+.inboxDiv{
+  background-color: gray;
+  border-top-right-radius: 14px;
+  border-bottom-right-radius: 14px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 3%;
+  margin-top: 4%;
+  height: 30px;
+}
+#inboxIcon{
+  margin-right: 14px;
+  margin-left: 30px;
+}
+.number{
+  margin-left: 120px;
+}
+.starredDiv{
+  display: flex;
+  align-items: center;
+  margin-bottom: 3%;
+  margin-top: 3%;
+  height: 30px;
+}
+#starrerIcon{
+  margin-right: 14px;
+  margin-left: 30px;
+}
+.snoozedDiv{
+  display: flex;
+  align-items: center;
+  margin-bottom: 3%;
+  margin-top: 3%;
+  height: 30px;
+}
+#snoozedIcon{
+  margin-right: 14px;
+  margin-left: 30px;
+}
+.sentDiv{
+  display: flex;
+  align-items: center;
+  margin-bottom: 3%;
+  margin-top: 3%;
+  height: 30px;
+}
+#sentIcon{
+  margin-right: 14px;
+  margin-left: 30px;
+}
+.draftsDiv{
+  display: flex;
+  align-items: center;
+  margin-bottom: 3%;
+  margin-top: 3%;
+  height: 30px;
+}
+#draftsIcon{
+  margin-right: 14px;
+  margin-left: 30px;
+}
+.moreDiv{
+  display: flex;
+  align-items: center;
+  margin-bottom: 3%;
+  margin-top: 3%;
+  height: 30px;
+}
+#moreIcon{
+  margin-right: 14px;
+  margin-left: 30px;
+}
+.labelDiv{
+  margin-top: 20px;
+  margin-left: 30px;
+  align-items: center;
+  font-size: larger;
+}
+#labelIcon{
+  margin-left: 135px;
 }
