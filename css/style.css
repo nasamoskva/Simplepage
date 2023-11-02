@@ -1,0 +1,60 @@
+html {
+    height: 100%;
+}
+body {
+    background-color: #202124;
+    color: white;
+}
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.topContainer {
+    flex: 0 0 64px;
+    border: 1px solid red ;
+}
+.bottomContainer {
+    flex-grow: 1;
+    max-height: 300px;
+    border: 1px solid aqua;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.leftContainer {
+    border: 1px solid salmon;
+    flex: 0 0 250px;
+}
+
+.midContainer {
+    border: 1px solid aquamarine;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.rightContainer {
+    border: 1px solid blue;
+    flex: 0 0 56px;
+}
+
+.midTopContainer {
+    flex: 0 0 50px;
+    border: 1px solid sandybrown;
+}
+
+.midBottomContainer {
+    border: 1px solid pink;
+    flex: 1;
+    overflow: auto;
+}
