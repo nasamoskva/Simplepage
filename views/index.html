@@ -4,7 +4,87 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gmail</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+      let hidden = true;
+      function compose() {
+        console.log(hidden);
+        if (hidden) {
+          $("#compose").css("display", "block");
+          hidden = false;
+        } else {
+          $("#compose").css("display", "none");
+          hidden = true;
+        }
+      }
+
+      $(document).mouseup(function (e) {
+        var container = $(".sendContainer");
+        if (!container.is(e.target) && !container.has(e.target).length) {
+          $("#compose").css("display", "none");
+          hidden = true;
+        }
+      });
+
+      function close() {
+        console.log("sda");
+        $("#compose").css("display", "none");
+        hidden = true;
+      }
+      function f() {
+        console.log("sdadsa");
+      }
+      function show(ob) {
+        $.ajax({
+          url: "/singleMail/" + $(ob).data("id"),
+          type: "GET",
+          success: myAjaxSuccessFunction,
+          error: ajaxFailure,
+        });
+        function myAjaxSuccessFunction(data) {
+          console.log("data", data);
+          let str =
+            "<div" +
+            ' class="midBottomContainer"' +
+            'style="background-color: white; color: black">' +
+            '<div style="font-size: 30px; margin: 30px">'+ data.subject+'</div>' +
+            '<div style="display: flex;justify-content: space-between;margin-left: 10px;margin-right: 10px;">' +
+            '<div style="display: flex">' +
+            '<img src="https://lh3.googleusercontent.com/a/default-user=s40-p" alt="" style="border-radius: 50px"/>' +
+            '<div style="margin-left: 20px">' +
+            "<div>" +
+            "<b>"+ data.from +"</b> "+ data.from+"@gmail.com" +
+            "</div>" +
+            "<div>to me</div>" +
+            "</div>" +
+            "</div>" +
+            '<div style="display: flex; height: fit-content; gap: 20px">' +
+            "<label>"+ ob.date?.toLocaleString('en-US', { hour: 'numeric',
+                    minute: 'numeric', hour12: true }).toString()+" (XXX hours ago)</label>" +
+            "<img" +
+            ' src="https://www.gstatic.com/images/icons/material/system_gm/1x/star_border_black_20dp.png"' +
+            ' alt=""/>' +
+            "<img" +
+            ' src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/reply_baseline_nv700_20dp.png"' +
+            ' alt=""' +
+            " />" +
+            "<img" +
+            ' src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/more_vert_baseline_nv700_20dp.png"' +
+            ' alt=""' +
+            "/>" +
+            "</div>" +
+            "</div>" +
+            '<div style="padding: 20px">'+ data.content+'</div>' +
+            +"</div>";
+          $("#midBottomContainer").html(str);
+        }
+        function ajaxFailure(xhr, status, exception) {
+          $("button").html("Error");
+          console.log(xhr, status, exception);
+        }
+      }
+    </script>
   </head>
   <body>
     <div class="container">
@@ -116,37 +196,65 @@
           <div class="leftContainer">
             <div class="aic">
               <div class="z0">
-                <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/create_gm_grey_24dp.png" id="compose-svg">
-                <div style="font-size: large;">Compose</div> 
+                <img
+                  src="https://www.gstatic.com/images/icons/material/system_gm/1x/create_gm_grey_24dp.png"
+                  id="compose-svg"
+                />
+                <div style="font-size: large" onclick="compose()">Compose</div>
               </div>
               <div class="emailOptions">
                 <div class="inboxDiv">
-                  <img src="https://www.gstatic.com/images/icons/material/system/1x/inbox_white_20dp.png" id="inboxIcon">
+                  <img
+                    src="https://www.gstatic.com/images/icons/material/system/1x/inbox_white_20dp.png"
+                    id="inboxIcon"
+                  />
                   Inbox
                   <div class="number">28</div>
                 </div>
                 <div class="starredDiv">
-                  <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/star_border_white_20dp.png" id="starrerIcon">
-                  Starred</div>
+                  <img
+                    src="https://www.gstatic.com/images/icons/material/system_gm/1x/star_border_white_20dp.png"
+                    id="starrerIcon"
+                  />
+                  Starred
+                </div>
                 <div class="snoozedDiv">
-                  <img src="https://www.gstatic.com/images/icons/material/system_gm_filled/1x/schedule_white_20dp.png" id="snoozedIcon">
-                  Snoozed</div>
+                  <img
+                    src="https://www.gstatic.com/images/icons/material/system_gm_filled/1x/schedule_white_20dp.png"
+                    id="snoozedIcon"
+                  />
+                  Snoozed
+                </div>
                 <div class="sentDiv">
-                  <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/send_white_20dp.png" id="sentIcon">
-                  Sent</div>
+                  <img
+                    src="https://www.gstatic.com/images/icons/material/system_gm/1x/send_white_20dp.png"
+                    id="sentIcon"
+                  />
+                  Sent
+                </div>
                 <div class="draftsDiv">
-                  <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/insert_drive_file_white_20dp.png" id="draftsIcon">
-                  Drafts</div>
-                <div class="moreDiv" >
-                  <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/expand_more_white_20dp.png" id="moreIcon">
-                  More</div>
-              </div>  
+                  <img
+                    src="https://www.gstatic.com/images/icons/material/system_gm/1x/insert_drive_file_white_20dp.png"
+                    id="draftsIcon"
+                  />
+                  Drafts
+                </div>
+                <div class="moreDiv">
+                  <img
+                    src="https://www.gstatic.com/images/icons/material/system_gm/1x/expand_more_white_20dp.png"
+                    id="moreIcon"
+                  />
+                  More
+                </div>
+              </div>
               <div class="labelDiv">
                 Labels
-                <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/add_white_20dp.png" id="labelIcon">
-              </div>            
+                <img
+                  src="https://www.gstatic.com/images/icons/material/system_gm/1x/add_white_20dp.png"
+                  id="labelIcon"
+                />
+              </div>
             </div>
-            
           </div>
           <div class="midContainer">
             <div class="midTopContainer">
@@ -201,7 +309,8 @@
                 </div>
               </div>
             </div>
-            <div class="midBottomContainer">
+
+            <div class="midBottomContainer" id="midBottomContainer">
               <div class="midBottomTopContainer">
                 <div class="mbs1">
                   <img
@@ -227,6 +336,45 @@
                   Social
                 </div>
               </div>
+              <% for(let ob of mails) {%> <% if(ob.read == false) { %>
+              <div
+                class="scrollitem"
+                style="background-color: #2c2c2c; border-bottom: 1px solid gray"
+                data-id="<%= ob._id%>"
+                onclick="show(this)"
+              >
+                <input
+                  type="text"
+                  value="<%=ob._id %>"
+                  style="display: none"
+                  name="ob"
+                />
+                <div class="subScrollItem">
+                  <img
+                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_white_20dp.png"
+                    alt=""
+                  />
+                  <img
+                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_white_20dp.png"
+                    alt=""
+                  />
+                  <div>
+                    <p style="color: #fff; font-weight: 900"><%= ob.from %></p>
+                  </div>
+                </div>
+                <div class="subScrollItemRight">
+                  <div>
+                    <p style="color: #fff; font-weight: 900">
+                      <%= ob.subject %>
+                    </p>
+                  </div>
+                  <div style="color: #fff; font-weight: 900">
+                    <%= ob.date?.toLocaleString('en-US', { hour: 'numeric',
+                    minute: 'numeric', hour12: true }) %>
+                  </div>
+                </div>
+              </div>
+              <% } else {%>
               <div class="scrollitem">
                 <div class="subScrollItem">
                   <img
@@ -238,307 +386,20 @@
                     alt=""
                   />
                   <div>
-                    <p>Test Test</p>
+                    <p><%= ob.from %></p>
                   </div>
                 </div>
                 <div class="subScrollItemRight">
                   <div>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Nemo rerum iste in nisi dignissimos facere cum id veniam.
-                      Tempore voluptas ipsum laudantium delectus eveniet qui vel
-                      debitis impedit eligendi soluta?
-                    </p>
+                    <p><%= ob.subject %></p>
                   </div>
-                  <div>4:45 PM</div>
+                  <div>
+                    <%= ob.date?.toLocaleString('en-US', { hour: 'numeric',
+                    minute: 'numeric', hour12: true }) %>
+                  </div>
                 </div>
               </div>
-              <div class="scrollitem">
-                <div class="subScrollItem">
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_white_20dp.png"
-                    alt=""
-                  />
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_white_20dp.png"
-                    alt=""
-                  />
-                  <div>
-                    <p>Test Test</p>
-                  </div>
-                </div>
-                <div class="subScrollItemRight">
-                  <div>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Nemo rerum iste in nisi dignissimos facere cum id veniam.
-                      Tempore voluptas ipsum laudantium delectus eveniet qui vel
-                      debitis impedit eligendi soluta?
-                    </p>
-                  </div>
-                  <div>4:45 PM</div>
-                </div>
-              </div>
-              <div class="scrollitem">
-                <div class="subScrollItem">
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_white_20dp.png"
-                    alt=""
-                  />
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_white_20dp.png"
-                    alt=""
-                  />
-                  <div>
-                    <p>Test Test</p>
-                  </div>
-                </div>
-                <div class="subScrollItemRight">
-                  <div>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Nemo rerum iste in nisi dignissimos facere cum id veniam.
-                      Tempore voluptas ipsum laudantium delectus eveniet qui vel
-                      debitis impedit eligendi soluta?
-                    </p>
-                  </div>
-                  <div>4:45 PM</div>
-                </div>
-              </div>
-              <div class="scrollitem">
-                <div class="subScrollItem">
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_white_20dp.png"
-                    alt=""
-                  />
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_white_20dp.png"
-                    alt=""
-                  />
-                  <div>
-                    <p>Test Test</p>
-                  </div>
-                </div>
-                <div class="subScrollItemRight">
-                  <div>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Nemo rerum iste in nisi dignissimos facere cum id veniam.
-                      Tempore voluptas ipsum laudantium delectus eveniet qui vel
-                      debitis impedit eligendi soluta?
-                    </p>
-                  </div>
-                  <div>4:45 PM</div>
-                </div>
-              </div>
-              <div class="scrollitem">
-                <div class="subScrollItem">
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_white_20dp.png"
-                    alt=""
-                  />
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_white_20dp.png"
-                    alt=""
-                  />
-                  <div>
-                    <p>Test Test</p>
-                  </div>
-                </div>
-                <div class="subScrollItemRight">
-                  <div>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Nemo rerum iste in nisi dignissimos facere cum id veniam.
-                      Tempore voluptas ipsum laudantium delectus eveniet qui vel
-                      debitis impedit eligendi soluta?
-                    </p>
-                  </div>
-                  <div>4:45 PM</div>
-                </div>
-              </div>
-              <div class="scrollitem">
-                <div class="subScrollItem">
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_white_20dp.png"
-                    alt=""
-                  />
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_white_20dp.png"
-                    alt=""
-                  />
-                  <div>
-                    <p>Test Test</p>
-                  </div>
-                </div>
-                <div class="subScrollItemRight">
-                  <div>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Nemo rerum iste in nisi dignissimos facere cum id veniam.
-                      Tempore voluptas ipsum laudantium delectus eveniet qui vel
-                      debitis impedit eligendi soluta?
-                    </p>
-                  </div>
-                  <div>4:45 PM</div>
-                </div>
-              </div>
-              <div class="scrollitem">
-                <div class="subScrollItem">
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_white_20dp.png"
-                    alt=""
-                  />
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_white_20dp.png"
-                    alt=""
-                  />
-                  <div>
-                    <p>Test Test</p>
-                  </div>
-                </div>
-                <div class="subScrollItemRight">
-                  <div>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Nemo rerum iste in nisi dignissimos facere cum id veniam.
-                      Tempore voluptas ipsum laudantium delectus eveniet qui vel
-                      debitis impedit eligendi soluta?
-                    </p>
-                  </div>
-                  <div>4:45 PM</div>
-                </div>
-              </div>
-              <div class="scrollitem">
-                <div class="subScrollItem">
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_white_20dp.png"
-                    alt=""
-                  />
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_white_20dp.png"
-                    alt=""
-                  />
-                  <div>
-                    <p>Test Test</p>
-                  </div>
-                </div>
-                <div class="subScrollItemRight">
-                  <div>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Nemo rerum iste in nisi dignissimos facere cum id veniam.
-                      Tempore voluptas ipsum laudantium delectus eveniet qui vel
-                      debitis impedit eligendi soluta?
-                    </p>
-                  </div>
-                  <div>4:45 PM</div>
-                </div>
-              </div>
-              <div class="scrollitem">
-                <div class="subScrollItem">
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_white_20dp.png"
-                    alt=""
-                  />
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_white_20dp.png"
-                    alt=""
-                  />
-                  <div>
-                    <p>Test Test</p>
-                  </div>
-                </div>
-                <div class="subScrollItemRight">
-                  <div>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Nemo rerum iste in nisi dignissimos facere cum id veniam.
-                      Tempore voluptas ipsum laudantium delectus eveniet qui vel
-                      debitis impedit eligendi soluta?
-                    </p>
-                  </div>
-                  <div>4:45 PM</div>
-                </div>
-              </div>
-              <div class="scrollitem">
-                <div class="subScrollItem">
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_white_20dp.png"
-                    alt=""
-                  />
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_white_20dp.png"
-                    alt=""
-                  />
-                  <div>
-                    <p>Test Test</p>
-                  </div>
-                </div>
-                <div class="subScrollItemRight">
-                  <div>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Nemo rerum iste in nisi dignissimos facere cum id veniam.
-                      Tempore voluptas ipsum laudantium delectus eveniet qui vel
-                      debitis impedit eligendi soluta?
-                    </p>
-                  </div>
-                  <div>4:45 PM</div>
-                </div>
-              </div>
-              <div class="scrollitem">
-                <div class="subScrollItem">
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_white_20dp.png"
-                    alt=""
-                  />
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_white_20dp.png"
-                    alt=""
-                  />
-                  <div>
-                    <p>Test Test</p>
-                  </div>
-                </div>
-                <div class="subScrollItemRight">
-                  <div>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Nemo rerum iste in nisi dignissimos facere cum id veniam.
-                      Tempore voluptas ipsum laudantium delectus eveniet qui vel
-                      debitis impedit eligendi soluta?
-                    </p>
-                  </div>
-                  <div>4:45 PM</div>
-                </div>
-              </div>
-              <div class="scrollitem">
-                <div class="subScrollItem">
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_white_20dp.png"
-                    alt=""
-                  />
-                  <img
-                    src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_white_20dp.png"
-                    alt=""
-                  />
-                  <div>
-                    <p>Test Test</p>
-                  </div>
-                </div>
-                <div class="subScrollItemRight">
-                  <div>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Nemo rerum iste in nisi dignissimos facere cum id veniam.
-                      Tempore voluptas ipsum laudantium delectus eveniet qui vel
-                      debitis impedit eligendi soluta?
-                    </p>
-                  </div>
-                  <div>4:45 PM</div>
-                </div>
-              </div>
+              <% } %> <%} %>
               <div class="scrollitem">
                 <div class="subScrollItem">
                   <img
@@ -1003,6 +864,89 @@
               </svg>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="compose" style="display: none">
+      <div class="mainComposeContainer">
+        <div class="sendContainer">
+          <div class="headerComposeContainer">
+            <div class="headerText">New Messages</div>
+            <div class="headerButtons">
+              <img
+                src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_minimize_16px_1x.png"
+                height="16px"
+                width="16px"
+              />
+              <img
+                src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_close_fullscreen_16px_1x.png"
+                height="16px"
+                width="16px"
+              />
+              <img
+                src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_close_16px_1x.png"
+                height="16px"
+                width="16px"
+                onclick="close()"
+              />
+            </div>
+          </div>
+          <form action="/sendEmail" method="post" style="display: contents">
+            <div class="toComposeContainer">
+              <div class="to1">To</div>
+              <input type="text" class="to2" name="to" placeholder="Recipent" />
+              <div class="to3">Cc Bcc</div>
+            </div>
+            <div class="subjectComposeContainer">
+              <input
+                type="text"
+                class="to2"
+                name="subject"
+                placeholder="Subject"
+              />
+            </div>
+            <div class="contentComposeContainer">
+              <textarea
+                id="body"
+                class="compose-body"
+                name="content"
+                rows="10"
+              ></textarea>
+            </div>
+            <input
+              type="text"
+              value="<%=new Date() %>"
+              style="display: none"
+              name="date"
+            />
+            <input
+              type="text"
+              value="<%=user[0].username %>"
+              style="display: none"
+              name="from"
+            />
+            <input
+              type="text"
+              value="false"
+              style="display: none"
+              name="read"
+            />
+            <div class="buttonComposeContainer">
+              <input
+                type="submit"
+                value="Send"
+                class="sendButton"
+                onclick="f()"
+              />
+              <div style="padding-right: 20px">
+                <img
+                  src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/delete_baseline_nv700_20dp.png"
+                  alt=""
+                />
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>

@@ -14,7 +14,7 @@ body {
 }
 
 .mainContainer {
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
 }
 
@@ -53,6 +53,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 10px;
 }
 
 .seach2 {
@@ -134,6 +135,7 @@ body {
   display: flex;
   gap: 20px;
   height: 50px;
+  padding-left: 10px;
 }
 
 .mbs1 {
@@ -168,6 +170,7 @@ body {
   margin-bottom: 1px;
   color: #afafaf;
   padding-right: 10px;
+  padding-left: 10px;
 }
 .subScrollItem {
   display: flex;
@@ -206,7 +209,7 @@ body {
   height: 100px;
 }
 
-.z0{
+.z0 {
   user-select: none;
   height: 56px;
   border: 1px solid;
@@ -215,14 +218,13 @@ body {
   margin-bottom: 9px;
   margin-right: 100px;
   margin-left: 10px;
-  color:#5f6368;
+  color: #5f6368;
   background-color: #fff;
   cursor: pointer;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .z0 #compose-svg {
@@ -234,16 +236,16 @@ body {
 .z0 div {
   -webkit-font-smoothing: antialiased;
   font-family: "Google Sans";
-  font-size: .875rem;
+  font-size: 0.875rem;
   letter-spacing: normal;
 }
 
-.emailOptions{
+.emailOptions {
   overflow: visible;
   white-space: nowrap;
   width: 100%;
 }
-.inboxDiv{
+.inboxDiv {
   background-color: gray;
   border-top-right-radius: 14px;
   border-bottom-right-radius: 14px;
@@ -253,74 +255,199 @@ body {
   margin-top: 4%;
   height: 30px;
 }
-#inboxIcon{
+#inboxIcon {
   margin-right: 14px;
   margin-left: 30px;
 }
-.number{
+.number {
   margin-left: 120px;
 }
-.starredDiv{
+.starredDiv {
   display: flex;
   align-items: center;
   margin-bottom: 3%;
   margin-top: 3%;
   height: 30px;
 }
-#starrerIcon{
+#starrerIcon {
   margin-right: 14px;
   margin-left: 30px;
 }
-.snoozedDiv{
+.snoozedDiv {
   display: flex;
   align-items: center;
   margin-bottom: 3%;
   margin-top: 3%;
   height: 30px;
 }
-#snoozedIcon{
+#snoozedIcon {
   margin-right: 14px;
   margin-left: 30px;
 }
-.sentDiv{
+.sentDiv {
   display: flex;
   align-items: center;
   margin-bottom: 3%;
   margin-top: 3%;
   height: 30px;
 }
-#sentIcon{
+#sentIcon {
   margin-right: 14px;
   margin-left: 30px;
 }
-.draftsDiv{
+.draftsDiv {
   display: flex;
   align-items: center;
   margin-bottom: 3%;
   margin-top: 3%;
   height: 30px;
 }
-#draftsIcon{
+#draftsIcon {
   margin-right: 14px;
   margin-left: 30px;
 }
-.moreDiv{
+.moreDiv {
   display: flex;
   align-items: center;
   margin-bottom: 3%;
   margin-top: 3%;
   height: 30px;
 }
-#moreIcon{
+#moreIcon {
   margin-right: 14px;
   margin-left: 30px;
 }
-.labelDiv{
+.labelDiv {
   margin-top: 20px;
   margin-left: 30px;
   align-items: center;
   font-size: larger;
 }
-#labelIcon{
+#labelIcon {
   margin-left: 135px;
+}
+
+/* Compose */
+
+#compose {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.mainComposeContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sendContainer {
+  width: 70%;
+  height: 80%;
+  background-color: white;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  color: black;
+}
+
+.headerComposeContainer {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f2f2f2;
+  align-items: center;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin: 0;
+}
+
+.headerText {
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: 600;
+}
+
+.headerButtons {
+  padding-right: 10px;
+}
+
+.toComposeContainer {
+  display: flex;
+  height: 35px;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.to1 {
+  padding-left: 10px;
+}
+
+.to2 {
+  flex: 1;
+}
+
+.to3 {
+  padding-right: 20px;
+}
+
+input[type="text"] {
+  border: none;
+  background: transparent;
+}
+
+input[type="text"]:focus {
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.subjectComposeContainer {
+  display: flex;
+  height: 35px;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-left: 10px;
+}
+
+.contentComposeContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.compose-body {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 95%;
+  height: 100%;
+}
+.compose-body:focus {
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.buttonComposeContainer {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sendButton {
+  background-color: #0b57d0;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 700;
+  margin-left: 30px;
 }
