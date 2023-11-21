@@ -6,6 +6,7 @@ var path = require("path");
 var ejs = require("ejs");
 const userModel = require("./public/models/users");
 const mailModel = require("./public/models/mails");
+const Mail = require("./public/models/mails");
 
 app.use(cookieParser("salt for cookie"));
 
@@ -76,7 +77,6 @@ app.get("/getAllMails", async function (req, res, next) {
   try {
     if (currUser) {
       mails = await mailModel.find({ to: currUser }).sort({date: -1});
-      console.log("sdaaaa", mails);
       res.redirect("/");
     } else {
       res.redirect("/login");
@@ -110,3 +110,52 @@ app.get("/singleMail/:id", async function(req,res,next) {
       res.status(500).send(error);
     }
 })
+
+app.get('/getSentMails', async function (req, res, next) {
+  try { 
+    
+    if(currUser) {
+      mails = await mailModel.find({ from: currUser }).sort({ date: -1});
+      res.json(mails);
+    } else { 
+      res.status(403).json({ error: "User not authenticated"});
+    }
+  }
+  catch (error){
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+app.get("/getInboxMails", async function (req, res, next) {
+  try {
+    console.log(currUser);
+    if (currUser) {
+      mails = await mailModel.find({ to: currUser }).sort({ date: -1 });
+      console.log('inbox',mails);
+      res.json(mails); 
+    } else {
+      res.status(403).json({ error: "User not authenticated" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+app.put('/updateReadStatus/:emailId', async function(req, res, next) {
+  const emailId = req.params.emailId;
+  try {
+    // console.log("here", mailModel.updateReadStatus());
+    // const updatedMail = await mailModel.updateReadStatus(emailId, { read: true });
+    const updatedMail = await Mail.findOneAndUpdate(
+      { _id : emailId },
+      { $set: { read: true} },
+      { new: true}
+    );
+    res.json({ message: 'Read status updated successfully', updatedMail });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});

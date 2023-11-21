@@ -79,9 +79,108 @@
             +"</div>";
           $("#midBottomContainer").html(str);
         }
+        
         function ajaxFailure(xhr, status, exception) {
           $("button").html("Error");
           console.log(xhr, status, exception);
+        }
+        var obId = $(ob).data("id");
+        updateReadStatus(obId);
+      }
+      function updateReadStatus(emailId) {
+        fetch(`/updateReadStatus/${emailId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ read: true }),
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      }
+      function sent() {
+        changeBackgroundColor('emailDivId');
+        $.ajax({
+          url: "/getSentMails",
+          type: "GET",
+          success: function (data) {
+            renderEmails(data);
+          },
+          error: function (xhr, status, exception) {
+            console.log(xhr, status, exception);
+          },
+        });
+      }
+      function inbox() {
+        changeBackgroundColor('inboxDivId');
+        $.ajax({
+          url: "/getInboxMails",
+          type: "GET",
+          success: function (data) {
+            renderEmails(data);
+          },
+          error: function (xhr, status, exception) {
+            console.log(xhr, status, exception);
+          },
+        });
+      }
+      function changeBackgroundColor(elementId){
+        var inboxDiv = document.getElementById('inboxDivId');
+        var emailDiv = document.getElementById('emailDivId');
+
+        inboxDiv.style.backgroundColor = "";
+        emailDiv.style.backgroundColor = "";
+
+        var clickedDiv = document.getElementById(elementId);
+        clickedDiv.style.backgroundColor = "grey";
+      }
+    
+      function renderEmails(emails) {
+        $("#midBottomContainer").empty();
+
+        for (let ob of emails) {
+          let backgroundColor = ob.read ? "black"  : "#2c2c2c";
+
+          let emailHtml =
+            '<div class="scrollitem" style="background-color: ' + 
+            backgroundColor + 
+            '; border-bottom: 1px solid grey" data-id="' +
+            ob._id +
+            '" onclick="show(this)">' +
+            '<input type="text" value="' +
+            ob._id +
+            '" style="display: none" name="ob" />' +
+            '<div class="subScrollItem">' +
+            '<img src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_white_20dp.png" alt="" />' +
+            '<img src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_white_20dp.png" alt="" />' +
+            '<div>' +
+            '<p style="color: #fff; font-weight: 900">' +
+            ob.from +
+            "</p>" +
+            "</div>" +
+            "</div>" +
+            '<div class="subScrollItemRight">' +
+            '<div>' +
+            '<p style="color: #fff; font-weight: 900">' +
+            ob.subject +
+            "</p>" +
+            "</div>" +
+            '<div style="color: #fff; font-weight: 900">' +
+            ob.date?.toLocaleString("en-US", {
+              hour: "numeric",
+              minute: "numeric",
+              hour12: true,
+            }) +
+            "</div>" +
+            "</div>" +
+            "</div>";
+
+          $("#midBottomContainer").append(emailHtml);
         }
       }
     </script>
@@ -203,12 +302,12 @@
                 <div style="font-size: large" onclick="compose()">Compose</div>
               </div>
               <div class="emailOptions">
-                <div class="inboxDiv">
+                <div class="inboxDiv" id="inboxDivId">
                   <img
                     src="https://www.gstatic.com/images/icons/material/system/1x/inbox_white_20dp.png"
                     id="inboxIcon"
                   />
-                  Inbox
+                  <div onclick="inbox()">Inbox</div>
                   <div class="number">28</div>
                 </div>
                 <div class="starredDiv">
@@ -225,12 +324,12 @@
                   />
                   Snoozed
                 </div>
-                <div class="sentDiv">
+                <div class="sentDiv" id="emailDivId">
                   <img
                     src="https://www.gstatic.com/images/icons/material/system_gm/1x/send_white_20dp.png"
                     id="sentIcon"
                   />
-                  Sent
+                 <div onclick="sent()">Sent</div> 
                 </div>
                 <div class="draftsDiv">
                   <img
@@ -339,7 +438,7 @@
               <% for(let ob of mails) {%> <% if(ob.read == false) { %>
               <div
                 class="scrollitem"
-                style="background-color: #2c2c2c; border-bottom: 1px solid gray"
+                style="background-color: #2c2c2c; border-bottom: 1px solid grey"
                 data-id="<%= ob._id%>"
                 onclick="show(this)"
               >

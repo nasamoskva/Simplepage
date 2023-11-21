@@ -24,7 +24,17 @@ const MailSchema = new mongoose.Schema({
   }
   
 });
+// MailSchema.statics.updateReadStatus = async function(emailId, update) {
+//   try {
+//     const updatedMail = await this.findByIdAndUpdate(emailId, update, { new: true });
+//     return updatedMail;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 const Mail = mongoose.model("Mail", MailSchema);
 
 module.exports = Mail;
+
+
